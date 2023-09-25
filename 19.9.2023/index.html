@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catfact Generator</title>
+    <h1>Cat Facts</h1>
+</head>
+<body>
+    <button id="fetchButton">Give me a random fact!</button>
+    <p id="factDisplay"></p>
+    <script>
+        // Fetch a cat fact from the API
+        function fetchFacts() {
+            fetch("https://cat-fact.herokuapp.com/facts/random")
+                .then(response => response.json())
+                .then(data => {
+                    // Check if the response contains a fact (used google for that)
+                    if (data.text) {
+                        document.getElementById("factDisplay").textContent = data.text;
+                    } else {
+                        document.getElementById("factDisplay").textContent = "Unable to fetch a cat fact.";
+                    }
+                })
+                .catch(error => {
+                    console.error("An error occurred:", error);
+                    document.getElementById("factDisplay").textContent = "An error occurred while fetching the cat fact.";
+                });
+        }
+
+        // EventListender to fetch a cat fact when the button is clicked
+        document.getElementById("fetchButton").addEventListener("click", fetchFacts);
+    </script>
+</body>
+</html>

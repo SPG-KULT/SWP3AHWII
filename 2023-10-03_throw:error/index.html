@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Division</title>
+</head>
+<body>
+    <title>Division</title>
+    <h1>Division</h1>
+  
+    <script>
+        function f(x, y) {
+            if (y === 0) {
+                throw new Error('Division by zero'); // Throw in der Funktion um Divisionen durch null zu vermeiden
+            }
+            return x / y;
+        }
+
+        for (let i = 0; i < 20; i++) {
+            let x = Math.floor(Math.random() * 11);
+            let y = Math.floor(Math.random() * 11);
+            try {                                   // Try in der Schleife um die Fehlermeldung zu vermeiden, Catch mit error message falls es einen Fehler gibt.
+                console.log(f(x, y));
+            } catch (e) {
+                console.log(e.message);
+            }
+        }
+    </script>
+</body>
+</html>

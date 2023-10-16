@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Promise Example</title>
+    <style>
+      .error {
+        background-color: red;
+      }
+      .success {
+        background-color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="btn">Click me!</button>
+    <div id="result"></div>
+    <script>
+      function randomPromise() {                        // funktion die manchmal resolved und manchmal rejected mit Promise
+        return new Promise((resolve, reject) => {
+          let randomNum = Math.random();
+          if (randomNum < 0.5) {
+            resolve("Promise resolved!");
+          } else {
+            reject("Promise rejected!");
+          }
+        });
+      }
+
+      const btn = document.getElementById("btn");               // button und div holen
+      const result = document.getElementById("result");
+
+      btn.addEventListener("click", () => {                 // click event listener der die Funktion aufruft und dann das Ergebnis in das div schreibt
+        randomPromise()
+          .then((resultText) => {
+            const resultDiv = document.createElement("div");
+            const p = document.createElement("p");
+            p.innerText = resultText;
+            p.classList.add("success");
+            resultDiv.appendChild(p);
+            result.appendChild(resultDiv);
+          })
+          .catch((error) => {
+            const resultDiv = document.createElement("div");
+            const p = document.createElement("p");
+            p.innerText = error;
+            p.classList.add("error");
+            resultDiv.appendChild(p);
+            result.appendChild(resultDiv);
+          });
+      });
+    </script>
+  </body>
+</html>

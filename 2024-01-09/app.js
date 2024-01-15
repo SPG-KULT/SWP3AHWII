@@ -15,7 +15,7 @@ class Person {
     }
     set gewicht(gewichtPar) {
         // gewicht in kg
-        if (gewichtPar < 1 || gewichtPar > 500) {
+        if (gewichtPar < 10 || gewichtPar > 500) {
             throw new Error('ungültiges Gewicht');
         }
         this.#gewicht = gewichtPar;
@@ -24,7 +24,7 @@ class Person {
         return this.#gewicht;
     }
     set groesse(groessePar) {
-        if (groessePar < 0.50 || groessePar >2.50) {
+        if (groessePar < 0.50 || groessePar > 3.00) {
             throw new Error('ungültige Groesse');
         }
         this.groesse = groessePar;
@@ -38,13 +38,14 @@ class Person {
     
     
 }
-p = new Person('Hans', 80, 1.8);
 a = [
-    ["peta", 90, 1.7],
-    ["roland",70, 1.7]
-    ["hans", 80, 1.8]
+    ["Peta", 90, 1.7],
+    ["Roland",70, 1.7],
+    ["Hans", 80, 1.8],
+    ["Lisa", 50, 3.5]      //Wie schaffe ich es, dass hier ein Fehler geworfen wird? 
 ];
-b = a.map(arr => new Person (...arr));
-b.forEach((p) => console.log(p.toString));
 
-console.log(p1.gewicht);
+b = a.map(arr => new Person (...arr));
+b.forEach((p) => console.log("Name: " + p.name + " Gewicht: " + p.gewicht + " Größe: " + p.groesse + " BMI: " + p.bmi));
+
+

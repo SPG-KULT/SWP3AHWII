@@ -88,13 +88,27 @@ class Person {
     }
     
 }
-a = [
+/*a = [
     ['Peta', 90, 1.7,'m'],
     ['Lisa', 50, 3.5,'w'], 
     ['Roland', 70, 1.7,'w'],
-    ['Hans', 80, 1.8,'w'],
-];
+    ['Hans', 80, 1.8,'w'], 
+]; */
+function calculateBMI(){
+    let name = document.getElementById('nameInput').value;
+    let kg = document.getElementById('weightInput').value;
+    let m = document.getElementById('heightInput').value;
+    let geschlecht = document.getElementById('genderInput').value;
+    
+    try {
+        let person = new Person(name, kg, m, geschlecht);
+       document.getElementById('bmiOutput').innerHTML = person.toString();
+    } catch (e) {
+        console.log(e.message);
+    }
+}
 
+/*
 b = a.map((arr) => {
     try {
         return new Person(...arr);
@@ -103,4 +117,4 @@ b = a.map((arr) => {
         return null;
     }
 }); // jetzt ist b ein Personen-Array
-b.forEach((p) => console.log(p + ''));
+b.forEach((p) => console.log(p + ''));*/

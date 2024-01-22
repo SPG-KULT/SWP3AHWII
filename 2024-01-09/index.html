@@ -4,13 +4,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>BMI Rechner</title>
     <script src="app.js" defer></script>
 </head>
 <body>
-    <h1>Geben Sie Ihren Namen, Gewicht, Größe und Geschlecht an</h1>
-
-    <input id="nameInput"></input>
+    <h1>BMI Rechner</h1>
+    <label for="nameInput">Name:</label>
+    <input id="nameInput" type="text"></input>
     
+    <label for="weightInput">Gewicht (in kg):</label>
+    <input id="weightInput" type="number"></input>
+    
+    <label for="heightInput">Größe (in m):</label>
+    <input id="heightInput" type="number"></input>
+    
+    <label for="genderInput">Geschlecht:</label>
+    <select id="genderInput">
+        <option value="m">Männlich</option>
+        <option value="w">Weiblich</option>
+    </select>
+    
+    <button onclick="calculateBMI()">BMI berechnen</button>
+    
+    <h2>Ergebnis:</h2>
+    <p id="bmiOutput"></p>
+    <p id="weightStatusOutput"></p>
 </body>
 </html>
+    
+
+    
+    

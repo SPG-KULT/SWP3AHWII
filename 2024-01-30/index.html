@@ -1,0 +1,74 @@
+<!-- FILEPATH: /Users/tim/Documents/SWP2023_24/SWP3AHWII-2/2024-01-30/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="app.js" defer></script>
+  </head>
+
+  <body>
+    <label for="einwerfen">Geld einwerfen:</label>
+    <input type="number" id="einwerfen" placeholder="Geld einwerfen" />
+
+    <label for="ziel">Ziel einstellen:</label>
+    <select id="ziel" name="ziel">
+      <option value="Salzburg">Salzburg</option>
+      <option value="Innsbruck">Innsbruck</option>
+      <option value="Klagenfurt">Klagenfurt</option>
+      <option value="Graz">Graz</option>
+      <option value="Bregenz">Bregenz</option>
+    </select>
+
+    <label for="anzahlPersonen">Anzahl Personen:</label>
+    <input
+      type="number"
+      id="anzahlPersonen"
+      placeholder="Anzahl Personen"
+      min="1"
+      max="10"
+    />
+
+    <label for="fahrpreis">Fahrpreis:</label>
+    <span id="fahrpreis">-</span>
+
+    <label for="guthaben">Guthaben:</label>
+    <span id="guthaben">0</span>
+
+    <label for="ticketAusgabe">Ticketausgabe:</label>
+    <textarea id="ticketAusgabe" rows="10" cols="30" readonly></textarea>
+
+    <label for="einnahmen">Gesamte Einnahmen:</label>
+    <span id="einnahmen">0</span>
+
+    <button onclick="ticketKaufen()">Ticket kaufen</button>
+  </body>
+</html>
+
+<!--
+/*
+
+- Man kann das Fahrziel einstellen, in einem `select` Feld.
+- Man kann die Anzahl der Fahrgäste einstellen (1-10)
+- man kann den Button `ticketKaufen()` drücken, dann wird ein Ticket gedruckt.
+
+## Bonusufgabe html Benutzeroberfläche:
+
+Elemente der Benutzeroberfläche:
+
+- einwerfen (input type=numer ... submit)
+- ziel einstellen (option / select)
+- anzahl Personen einstellen
+- Anzeige Fahrpreis (ändert sich bei Ziel Änderung oder Anzahl Änderung)
+- Anzeige des Guthabens (ändert sich durch einwerfen `#eingeworfen`)
+- Ausgabefeld des Tickets, dort kann auch angezeigt werden "Es fehlen noch XX
+€ damit ich das Ticket drucken kann".
+- Anzeige der gesamten Einnahmen des Automatens, ändert sich bei jedem
+Ticketkauf (`#einnahmenGesamt`)
+- button "Ticket Kaufen" (wenn das Geld reicht wird Ticket gedruckt und die
+`#einnahmenGesamt` vergrößern sich entsprechend)
+
+## gutes Gelingen!
+*/
+ -->

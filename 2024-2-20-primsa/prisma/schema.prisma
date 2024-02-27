@@ -8,18 +8,22 @@ generator client {
 }
 
 model User {
-    id       String  @id @default(cuid())
-    email    String  @unique
-    name     String?
-    password String?
+    id           String         @id @default(cuid())
+    email        String         @unique
+    name         String?
+    password     String?
+    accounts     Accounts[]
+    transactions Transactions[]
+    payees       payees[]
 }
 
 model Accounts {
-    id      String  @id @default(cuid())
-    title   String?
-    balance Int?
-    user    User    @relation(fields: [userId], references: [id])
-    //Wie funktionieren Beziehungen? Habe nachhgeschaut, aber nicht verstanden.
+    id           String         @id @default(cuid())
+    title        String?
+    balance      Int?
+    user         User           @relation(fields: [userId], references: [id])
+    userId       String         @map("user_id")
+    transactions Transactions[]
 }
 
 model Transactions {
@@ -28,14 +32,14 @@ model Transactions {
     currency  String?
     date      DateTime?
     account   Accounts  @relation(fields: [accountId], references: [id])
-    accountId String
+    accountId String    @map("account_id")
     user      User      @relation(fields: [userId], references: [id])
-    userId    String
+    userId    String    @map("user_id")
 }
 
 model payees {
     id     String  @id @default(cuid())
     name   String?
     user   User    @relation(fields: [userId], references: [id])
-    userId String
+    userId String  @map("user_id")
 }

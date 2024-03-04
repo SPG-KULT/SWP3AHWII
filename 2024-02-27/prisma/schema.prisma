@@ -1,0 +1,25 @@
+datasource db {
+    provider = "sqlite"
+    url      = "file:./cardrac.db"
+}
+
+generator client {
+    provider = "prisma-client-js"
+    
+}
+
+model Cards {
+    id      String @id @default(cuid())
+    name    String @unique
+    hp      Int
+    ad      Int
+    type    Type   @relation(fields: [type_id], references: [id])
+    type_id String
+}
+
+model Type {
+    id       String  @id @default(cuid())
+    name     String  @unique
+    weakness String
+    cards    Cards[]
+}

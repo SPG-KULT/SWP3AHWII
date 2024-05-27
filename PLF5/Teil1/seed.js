@@ -1,84 +1,93 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
 const { fakerDE } = require('@faker-js/faker');
-const zooCountTarget = 5;
-const abteilungCountTarget = 7;
-const tierCountTarget = 20;
-const mitarbeiterTarget = 100;
-const abteilungFillRange = 4;
+const { PrismaClient } = require('@prisma/client');
 
-async function seed() {
-    const zooCount = await prisma.zoo.count();
-    for (i = 0; i <= zooCountTarget; i++) {
-        const zoo = {
-            land: fakerDE.location.country(),
-            stadt: fakerDE.location.city(),
-            adresse: fakerDE.location.streetAddress(),
-            baujahr: fakerDE.number.int({ min: 2000, max: 2021 }),
-            abteilungen: {
-                //name: fakerDE.animal.type(),
+const ZOO_COUNT_TARGET = 5;
+const ABTEILUNG_COUNT_TARGET = 7;
+const TIER_COUNT_TARGET = 20;
+const MITARBEITER_TARGET = 100;
+const ABTEILUNG_FILL_RANGE = 4;
 
-            }
+const prisma = new PrismaClient();
+async function main() {
 
-
-
-
-        };
-
-        console.log("seeding");
-        const createZoo = await prisma.zoo.create({
-            data: zoo,
+    console.log('Seeding ...');
+    for (let i = 0; i < ZOO_COUNT_TARGET; i++) {
+        await prisma.zoo.create({
+            data: {
+                land: fakerDE.location.country(),
+                stadt: fakerDE.location.city(),
+                adresse: fakerDE.location.streetAddress(),
+                baujahr: fakerDE.number.int({ min: 1700, max: 2023 }),
+            },
         });
-        console.log(`${await prisma.zoo.count()} Zoo in der DB`);
     }
 
 
+    const zoos = await prisma.zoo.findMany();
+    for (zooAktuell of zoos)
+        for (let i = 0; i < fakerDE.number.int({ min: 2, max: 7 }); i++) {
+            await prisma.abteilung.create({
+                data: {
+                    name: fakerDE.animal.type(),
+                    zoo:
+                    {
+                        connect: {
+                            id: zooAktuell.id
+                        },
+                    },
+                },
+            });
+        }
 
-    //const abteilungCount = await prisma.abteilung.count();
-    /*  for (i = 0; i <= abteilungCountTarget; i++) {
-         const abteilung = {
-             name: fakerDE.animal.type(),
-             zoo: {
- 
-             }
-             //mitarbeiter: 
-             //tiere: 
- 
-         };
-         console.log("seeding");
-         const createAbteilung = await prisma.abteilung.create({
-             data: abteilung,
-         });
-         console.log(`${await prisma.abteilung.count()} Abteilungen in der DB`);
-     } 
 
-    const tierCount = await prisma.tier.count();
-    for (i = 0; i <= tierCountTarget; i++) {
-        const tier = {
-            name: fakerDE.person.firstName(),
-            art: fakerDE.animal.type(),
-            abteilungen: {
-
-            }
-
-        };
-        console.log("seeding");
-        const createTiere = await prisma.tier.create({
-            data: abteilung,
-        });
-        console.log(`${await prisma.tier.count()} Tiere in der DB`);
+    const abteilungArr = await prisma.abteilung.findMany();
+    for (let abteilungAktuell of abteilungArr) {
+        for (i = 0; i < fakerDE.number.int({ min: 5, max: TIER_COUNT_TARGET }); i++) {
+            await prisma.tier.create({
+                data: {
+                    name: fakerDE.person.firstName(),
+                    art: fakerDE.animal[abteilungAktuell.name](),
+                    abteilungen:
+                    {
+                        connect: {
+                            id: abteilungAktuell.id
+                        },
+                    },
+                },
+            });
+        }
     }
 
-    const mitarbeiterCount = await prisma.Mitarbeiter.count();
-    for (i = 0; i <= mitarbeiterCountTarget; i++) {
-        const tier = {
-            name: fakerDE.person.fullName(),
-            abteilungen: {
-
+    for (let i = 0; i < MITARBEITER_TARGET; i++) {
+        await prisma.mitarbeiter.create({
+            data: {
+                name: fakerDE.person.firstName(),
+            },
+        });
+        const abteilungenZoo = await prisma.abteilung.findMany({
+            where: {
+                zoo: {
+                    id: zoos[fakerDE.number.int({ min: 0, max: zoos.length - 1 })].id,
+                }
             }
-
-        };
-    } */
+        });
+        const mitArbeiterArr = await prisma.mitarbeiter.findMany();
+        for (let j = 0; j < fakerDE.number.int({ min: 1, max: 3 }); j++) {
+            await prisma.mitarbeiter.update({
+                data: {
+                    abteilungen: {
+                        connect: abteilungenZoo[fakerDE.number.int({ min: 0, max: 4 })],
+                    },
+                },
+                where: {
+                    id: mitArbeiterArr[i].id
+                }
+            });
+        }
+    }
 }
 
-seed();
+main().then(console.log("seeding done"))
+    .catch(console.error).finally(async () => {
+        await prisma.$disconnect();
+    });
